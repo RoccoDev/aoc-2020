@@ -1,6 +1,4 @@
 pub mod days;
-pub mod intcode;
-pub mod util;
 
 #[macro_use]
 extern crate aoc_runner_derive;
