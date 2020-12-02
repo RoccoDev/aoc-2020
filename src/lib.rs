@@ -1,3 +1,10 @@
+#[allow(unused_macros)]
+macro_rules! example {
+    ($($values:expr) +) => {
+        &stringify!($($values)*).replace(" ", "\n")
+    };
+}
+
 pub mod days;
 
 #[macro_use]

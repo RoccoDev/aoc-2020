@@ -68,13 +68,14 @@ mod tests {
 
     #[test]
     fn part1_example() {
-        let input = "1721\n979\n366\n299\n675\n1456";
+        let input = example!(1721 979 366 299 675 1456);
         assert_eq!(part1(input), 514579);
     }
 
     #[test]
     fn part2_example() {
-        let input = "1721\n979\n366\n299\n675\n1456";
+        let input = example!(1721 979 366 299 675 1456);
+        println!("{}", input);
         assert_eq!(part2(input), 241861950);
     }
 }
