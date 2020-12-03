@@ -75,7 +75,6 @@ mod tests {
     #[test]
     fn part2_example() {
         let input = example!(1721 979 366 299 675 1456);
-        println!("{}", input);
         assert_eq!(part2(input), 241861950);
     }
 }
