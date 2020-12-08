@@ -5,6 +5,7 @@ macro_rules! example {
     };
 }
 
+mod assembly;
 pub mod days;
 
 #[macro_use]
