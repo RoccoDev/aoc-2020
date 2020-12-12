@@ -1,9 +1,9 @@
 #[derive(Debug)]
-struct Location {
+struct Location<'a> {
     x: i32, // east/west
     y: i32, // north/south
     facing: Facing,
-    ship: Option<Box<Location>>,
+    ship: Option<&'a mut Location<'a>>,
 }
 
 #[derive(Copy, Clone, Debug)]
@@ -46,8 +46,8 @@ impl Facing {
     }
 }
 
-impl Location {
-    fn new() -> Location {
+impl<'a> Location<'a> {
+    fn new() -> Location<'a> {
         Location {
             x: 0,
             y: 0,
@@ -56,12 +56,12 @@ impl Location {
         }
     }
 
-    fn with_ship() -> Location {
+    fn with_ship(ship: &'a mut Location<'a>) -> Location<'a> {
         Location {
             x: 10,
             y: 1,
             facing: Facing::East,
-            ship: Some(Box::new(Location::new())),
+            ship: Some(ship),
         }
     }
 
@@ -114,14 +114,17 @@ fn part1(input: &str) -> i32 {
 
 #[aoc(day12, part2)]
 fn part2(input: &str) -> i32 {
-    let mut loc = Location::with_ship();
-    for line in input.lines() {
-        let mut chars = line.chars();
-        let action = chars.next().unwrap();
-        let value = chars.collect::<String>().parse().unwrap();
-        loc.step(action, value);
-    }
-    let ship = loc.ship.unwrap();
+    let mut ship = Location::new();
+    let ship = {
+        let mut loc = Location::with_ship(&mut ship);
+        for line in input.lines() {
+            let mut chars = line.chars();
+            let action = chars.next().unwrap();
+            let value = chars.collect::<String>().parse().unwrap();
+            loc.step(action, value);
+        }
+        loc.ship.unwrap()
+    };
     ship.x.abs() + ship.y.abs()
 }
 
