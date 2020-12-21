@@ -109,40 +109,7 @@ fn part2(input: &str) -> u64 {
         );
     }
     // Reduce possibilities to one each
-    loop {
-        let snapshot = res.clone();
-        let mut changed = 0;
-        for (i, possibilities) in snapshot.iter().enumerate() {
-            match possibilities.1.len() {
-                0 => {
-                    res[i] = old_snap[i].clone();
-                }
-                1 => {
-                    let x = possibilities.1[0];
-                    for (i1, poss2) in res.iter_mut().enumerate() {
-                        if i != i1 {
-                            let old_len = poss2.1.len();
-                            *poss2 = (
-                                poss2.0,
-                                poss2
-                                    .1
-                                    .iter()
-                                    .filter_map(|y| if *y != x { Some(*y) } else { None })
-                                    .collect::<Vec<_>>(),
-                            );
-                            if poss2.1.len() != old_len {
-                                changed += 1;
-                            }
-                        }
-                    }
-                }
-                _ => {}
-            }
-        }
-        if changed == 0 {
-            break;
-        }
-    }
+    crate::reduce_possibilities(&mut res);
     res.into_iter()
         .filter_map(|v| {
             if v.0.starts_with("departure") {
