@@ -20,7 +20,7 @@ impl Matcher {
     fn multiple_match<'a>(&self, message: &'a str, rules: &Vec<u8>) -> Vec<&'a str> {
         let mut messages = vec![message];
         for rule in rules {
-            let mut new_msgs = Vec::new();
+            let mut new_msgs = vec![];
             for message in messages {
                 new_msgs.append(&mut self.matches(&message, *rule))
             }
